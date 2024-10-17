@@ -1,18 +1,62 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Torre : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Regerences")]
+    [SerializeField] private Transform turretRotationPoint;
+    [SerializeField] private LayerMask enemyMask;
+
+    [Header("Attribute")]
+    [SerializeField] private float targetingRange = 5f;
+
+    private Transform target;
+
+    private void Update()
     {
-        
+        if(target == null )
+        {
+            FindTarget();
+            return;
+        }
+
+
+        RotateTowardsTargert();
+
+        if (!CheckTargetIsInRange())
+        {
+            target = null;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FindTarget()
     {
-        
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
+
+        if( hits.Length > 0 )
+        {
+            target = hits[0].transform;
+        }
     }
+   private  bool CheckTargetIsInRange()
+    {
+        return Vector2.Distance(target.position, transform.position) <= targetingRange;
+    }
+
+   void  RotateTowardsTargert()
+    {
+        float angle = MathF.Atan2(target.position.y - transform.position.y, target.position.x - transform.position.x) * Mathf.Rad2Deg - 90f;
+        Quaternion targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        turretRotationPoint.rotation = targetRotation;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Handles.color = Color.cyan;
+        Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);
+    }
+
 }
