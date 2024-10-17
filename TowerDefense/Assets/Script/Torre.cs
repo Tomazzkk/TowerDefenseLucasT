@@ -1,18 +1,83 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Torre : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Regerences")]
+    [SerializeField] private Transform turretRotationPoint;
+    [SerializeField] private LayerMask enemyMask;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firingPoint;
+
+
+    [Header("Attribute")]
+    [SerializeField] private float targetingRange = 5f;
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float bps = 1f; //projeteis por segundo
+   
+
+    private Transform target;
+    private float timeUntilFire;
+
+    private void Update()
     {
-        
+        if(  target == null )
+        {
+            FindTarget();
+            return;
+        }
+
+
+        RotateTowardsTargert();
+
+        if (!CheckTargetIsInRange())
+        {
+            target = null;
+        }
+        else
+        {
+            timeUntilFire += Time.deltaTime;
+
+            if( timeUntilFire >= 1f / bps) {
+                Shoot();
+                timeUntilFire = 0f;
+            }
+        }
+    }
+    private void Shoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
+        Bala bulletScript = bullet.GetComponent<Bala>();
+        bulletScript.SetTarget(target);
+    }
+    private void FindTarget()
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
+
+        if( hits.Length > 0 )
+        {
+            target = hits[0].transform;
+        }
+    }
+   private  bool CheckTargetIsInRange()
+    {
+        return Vector2.Distance(target.position, transform.position) <= targetingRange;
     }
 
-    // Update is called once per frame
-    void Update()
+   void  RotateTowardsTargert()
     {
-        
+        float angle = MathF.Atan2(target.position.y - transform.position.y, target.position.x - transform.position.x) * Mathf.Rad2Deg - 90f;
+        Quaternion targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Handles.color = Color.cyan;
+        Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);
+    }
+
 }
