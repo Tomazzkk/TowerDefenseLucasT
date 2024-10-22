@@ -31,8 +31,19 @@ public class Bloco : MonoBehaviour
     {
         if (tower != null) return;
 
-        GameObject towerToBuild = BuildManager.Instance.GetSelectedTower();
-       tower = Instantiate(towerToBuild, transform.position, Quaternion.identity);
+        
+        
+        Tower2 towerToBuild = BuildManager.Instance.GetSelectedTower();
+
+        if (towerToBuild.cost > LevelManager.main.currency)
+        {
+            Debug.Log("Voce nao tem dinheiro para comprar esta torre");
+            return;
+        }
+
+        LevelManager.main.SpendCurrency(towerToBuild.cost);
+
+        tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
         
     }
 }
