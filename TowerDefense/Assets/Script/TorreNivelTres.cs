@@ -13,7 +13,15 @@ public class TorreNivelTres : Torre
 
         if (hits.Length > 0)
         {
-            target = hits[0].transform;
+            int targetIndex = 0;
+
+            if (hits.Length > targetIndex)
+            {
+
+                target = hits[targetIndex].transform;
+
+            }
+
         }
     }
 }

@@ -14,7 +14,14 @@ public class TorreNivelUm : Torre
 
         if (hits.Length > 0)
         {
-            target = hits[0].transform;
+            int targetIndex = 3;
+
+            if (hits.Length > targetIndex)
+            {
+
+                target = hits[targetIndex].transform;
+
+            }
         }
     }
 }

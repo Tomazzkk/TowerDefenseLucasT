@@ -16,7 +16,7 @@ public class Torre : MonoBehaviour, ITower
     [Header("Attribute")]
     [SerializeField] protected float targetingRange = 5f;
     [SerializeField] protected float rotationSpeed = 5f;
-    [SerializeField] protected float bps = 1f; //projeteis por segundo
+    [SerializeField] private float bps = 1f; //projeteis por segundo
    
 
     protected Transform target;

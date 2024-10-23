@@ -10,7 +10,16 @@ public class TorreNivelDois : Torre
 
         if (hits.Length > 0)
         {
-            target = hits[0].transform;
+
+            int targetIndex = 2;
+
+            if (hits.Length > targetIndex)
+            {
+
+                target = hits[targetIndex].transform;
+
+            }   
         }
+
     }
 }

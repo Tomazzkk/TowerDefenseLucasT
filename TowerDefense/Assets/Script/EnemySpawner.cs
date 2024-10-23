@@ -26,8 +26,9 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
     private bool isSpawning = false;
-     int enemySelected;
-    public  EnemySpawner Instance;
+    int enemySelected;
+    public static EnemySpawner Instance;
+    
 
 
     
@@ -36,7 +37,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-           
+           Instance = this;
         onEnemyDestroy.AddListener(EnemyDestroyed);
     }
     private void Start()
