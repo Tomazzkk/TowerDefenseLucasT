@@ -14,7 +14,7 @@ public class EnemyMov : MonoBehaviour
 
     private void Start()
     {
-        target = LevelManager.main.path[pathIndex];
+        target = LevelManager.instance.path[pathIndex];
     }
     private void Update()
     {
@@ -22,7 +22,7 @@ public class EnemyMov : MonoBehaviour
         {
             pathIndex++;
 
-            if (pathIndex >= LevelManager.main.path.Length)
+            if (pathIndex >= LevelManager.instance.path.Length)
             {
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject);
@@ -30,7 +30,7 @@ public class EnemyMov : MonoBehaviour
             }
             else
             {
-                target = LevelManager.main.path[pathIndex];
+                target = LevelManager.instance.path[pathIndex];
             }
         }
     }

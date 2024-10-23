@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour
 
     private void OnGUI()
     {
-        currencyUi.text = LevelManager.main.currency.ToString();
+        currencyUi.text = LevelManager.instance.currency.ToString();
     }
 
     public void SetSelected()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TorreNivelUm : Torre
 {
 
-    //int EnemyShoot = EnemySpawner.;
+   
 
    
     public override void FindTarget()
