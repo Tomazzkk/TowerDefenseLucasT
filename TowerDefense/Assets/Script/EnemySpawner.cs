@@ -6,14 +6,17 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
+    
+
     [Header("References")]
-    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] public GameObject[] enemyPrefabs;
 
     [Header("Attributes")]
     [SerializeField] private int baseEnemies = 8;
     [SerializeField] private float enemiesPerSecond = 0.5f;
     [SerializeField] private float timeBetWeenWaves = 5f;
     [SerializeField] private float difficultySaclingFactor = 0.75f;
+    
 
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
@@ -23,9 +26,17 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
     private bool isSpawning = false;
+     int enemySelected;
+    public  EnemySpawner Instance;
+
+
+    
+
+
 
     private void Awake()
     {
+           
         onEnemyDestroy.AddListener(EnemyDestroyed);
     }
     private void Start()
@@ -71,7 +82,8 @@ public class EnemySpawner : MonoBehaviour
     }
     void SpawnEnemy()
     {
-        GameObject prefabToSpawn = enemyPrefabs[0];
+        enemySelected = Random.Range(0, enemyPrefabs.Length);
+        GameObject prefabToSpawn = enemyPrefabs[enemySelected];
         Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity); 
     }
     int EnemiesPerWave()

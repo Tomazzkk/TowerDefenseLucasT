@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Torre : MonoBehaviour
+public class Torre : MonoBehaviour, ITower
 {
     [Header("Regerences")]
     [SerializeField] private Transform turretRotationPoint;
-    [SerializeField] private LayerMask enemyMask;
+    [SerializeField] protected LayerMask enemyMask;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
 
 
     [Header("Attribute")]
-    [SerializeField] private float targetingRange = 5f;
-    [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private float bps = 1f; //projeteis por segundo
+    [SerializeField] protected float targetingRange = 5f;
+    [SerializeField] protected float rotationSpeed = 5f;
+    [SerializeField] protected float bps = 1f; //projeteis por segundo
    
 
-    private Transform target;
+    protected Transform target;
     private float timeUntilFire;
 
     private void Update()
@@ -53,14 +53,9 @@ public class Torre : MonoBehaviour
         Bala bulletScript = bullet.GetComponent<Bala>();
         bulletScript.SetTarget(target);
     }
-    private void FindTarget()
+    public virtual void FindTarget()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
-
-        if( hits.Length > 0 )
-        {
-            target = hits[0].transform;
-        }
+        
     }
    private  bool CheckTargetIsInRange()
     {
