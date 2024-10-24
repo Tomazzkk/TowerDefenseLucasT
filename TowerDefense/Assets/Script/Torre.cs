@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using UnityEditor;
 using UnityEngine;
 
 public class Torre : MonoBehaviour, ITower //Classe Torre que herda MonoBehaviour e ITower
@@ -70,10 +69,5 @@ public class Torre : MonoBehaviour, ITower //Classe Torre que herda MonoBehaviou
         turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    private void OnDrawGizmosSelected() //Método usado no editor do Unity para desenhar um círculo que mostra o alcance da torre;
-    {
-        Handles.color = Color.cyan;
-        Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);
-    }
 
 }

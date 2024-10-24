@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour //Classe responsavel pelo menu da loja
 
     private void OnGUI() // Esse método é chamado para atualizar a interface
     {
-        currencyUi.text = LevelManager.instance.currency.ToString(); // Atualiza o texto da UI com o valor atual de moedas (currency) que está no LevelManager
+        currencyUi.text = LevelManager.instance.currency.ToString(); 
     }
 
    

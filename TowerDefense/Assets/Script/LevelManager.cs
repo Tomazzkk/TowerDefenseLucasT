@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start() //Metodo start para atribuir valor a variavel currency, quando o jogo iniciar a variavel ira receber 150 como valor inicial
     {
-        currency = 150;
+        currency = 250;
     }
 
     public void IncreaseCurrency(int amount ) //Metodo com "amount" como parematro que é o dinheiro que ele ganha ao eliminar um inimigo, adicionando o valor de amount em currency
